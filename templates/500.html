@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+
+{% block title %}
+Server Error
+{% endblock %}
+
+{% block content %}
+<div class="card">
+    <h2>500 - Internal Server Error</h2>
+    <p>
+        Something went wrong on our server.
+        Please try again later.
+    </p>
+    <a href="{{ url_for('home') }}">
+        <button type="submit">Go Home</button>
+    </a>
+</div>
+{% endblock %}

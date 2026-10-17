@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+
+{% block title %}
+Assign Course
+{% endblock %}
+
+{% block content %}
+<div class="card">
+    <h2>Assign Course</h2>
+    <p>Student:
+        <strong>{{ student["name"] }}</strong>
+    </p>
+<form method="POST">
+
+    {{ form.hidden_tag() }}
+
+    {{ form.course_id.label }}
+
+    {{ form.course_id() }}
+
+    {% for error in form.course_id.errors %}
+        <p class="error">{{ error }}</p>
+    {% endfor %}
+
+    <br><br>
+
+    {{ form.submit() }}
+
+</form>
+</div>
+{% endblock %}

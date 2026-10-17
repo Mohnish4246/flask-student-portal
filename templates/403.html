@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+
+{% block title %}
+Access Denied
+{% endblock %}
+
+{% block content %}
+<div class="card">
+    <h2>403 - Access Denied</h2>
+    <p>
+        You do not have permission to access this page.
+    </p>
+    <a href="{{ url_for('home') }}">
+        <button type="submit">Go Home</button>
+    </a>
+</div>
+{% endblock %}

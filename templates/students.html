@@ -1,0 +1,103 @@
+
+{% extends "base.html" %}
+
+{% block title %}
+Students
+{% endblock %}
+
+{% block content %}
+<h2>Student List</h2>
+
+
+<!-- NEW: Search and filter controls centered in one row -->
+<form method="GET" class="student-search-form">
+
+    <!-- Course dropdown on the left -->
+    <select name="course">
+        <option value="">All Courses</option>
+        <option value="Python" {% if course == "Python" %}selected{% endif %}>Python</option>
+        <option value="SQL" {% if course == "SQL" %}selected{% endif %}>SQL</option>
+        <option value="Django" {% if course == "Django" %}selected{% endif %}>Django</option>
+        <option value="Flask" {% if course == "Flask" %}selected{% endif %}>Flask</option>
+        <option value="Data Analytics" {% if course == "Data Analytics" %}selected{% endif %}>Data Analytics</option>
+    </select>
+
+    <!-- Search field in the middle -->
+    <input
+        type="text"
+        name="search"
+        placeholder="Search Student by name"
+        value="{{ search }}"
+    >
+
+    <!-- Search and Clear buttons on the right -->
+    <button type="submit">Search</button>
+
+    <!-- Clear filters but stay on the current page -->
+    <a href="{{ url_for('student.student_list', page=page) }}">
+        <button type="button">Clear</button>
+    </a>
+
+</form>
+
+
+
+{% if students %}
+<table border='1' cellpadding='10'>
+    <tr>
+        <th>S.No.</th>
+        <th>UID</th>
+        <th>Name</th>
+        <th>Course</th>
+        <th>Actions</th>
+    </tr>
+    {% for student in students %}
+    <tr>
+    <!-- Serial number continues across pages (10 students per page) -->
+    <td>{{ (page - 1) * 10 + loop.index }}</td>
+    <td>{{ student["uid"] }}</td>
+    <td>{{ student["name"] }}</td>
+    <td>{{ student["course"] }}</td>
+    <td>
+            <a href="{{ url_for('student.student_details',id=student.id) }}">
+                <button>View</button>
+            </a>
+            {% if session.get("role") == "admin" %}
+            <a href="{{ url_for('student.edit_student',id=student['id']) }}">
+                <button>Edit</button>
+            </a>
+            <form method="POST" action="{{ url_for('student.delete_student',id=student.id) }}" 
+            style="display: inline;">
+            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+            <button type="submit">Delete</button>
+        </form>
+           
+            {% endif %}
+    </td>
+    </tr>
+    {% endfor %}
+</table>
+
+<div class="pagination">
+    {% if page > 1 %}
+        <a href="{{ url_for('student.student_list', page=page-1, search=search,course=course) }}">
+            <button>Previous</button>
+        </a>
+    {% endif %}
+
+    <span>
+        Page {{ page }} of {{ total_pages }}
+    </span>
+
+    {% if page < total_pages %}
+
+    <a href="{{ url_for('student.student_list', page=page+1,search=search,course=course) }}">
+        <button>Next</button>
+    </a>
+    {% endif %}
+
+</div>
+{% else %}
+<p>No Student Found</p>
+{% endif %}
+{% endblock %}

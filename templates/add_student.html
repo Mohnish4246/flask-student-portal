@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+
+{% block title %}
+Add Student
+{% endblock %}
+
+{% block content %}
+<div>
+    <h2>Add Student</h2>
+    <form method="POST" enctype="multipart/form-data">
+        {{ form.hidden_tag() }}
+        <div>
+            {{ form.name.label }}
+            {{ form.name() }}
+            {% for error in form.name.errors  %}
+                <p class="error">{{ error }}</p>
+            {% endfor %}
+        </div>
+        <br>
+        <div>
+            {{ form.course.label }}
+            {{ form.course() }}
+            {% for error in form.course.errors  %}
+                <p class="error">{{ error }}</p>
+            {% endfor %}
+        </div>
+        <br>
+        <div>
+            {{ form.photo.label }}
+            {{ form.photo() }}
+            {% for error in form.photo.errors  %}
+                <p class="error">{{ error }}</p>
+            {% endfor %}
+        </div>
+        <br>
+        {{ form.submit() }}
+    </form>
+</div>
+{% endblock %}

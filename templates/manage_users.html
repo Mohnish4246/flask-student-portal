@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+
+{% block title %}
+Manage Users
+{% endblock %}
+
+{% block content %}
+<h2>Manage Users</h2>
+{% if users %}
+<table>
+    <tr>
+        <th>UID</th>
+        <th>Username</th>
+        <th>Email</th>
+        <th>Role</th>
+    </tr>
+
+    {% for user in users %}
+        <tr>
+            <td>{{ user['id'] }}</td>
+            <td>{{ user['username'] }}</td>
+            <td>{{ user['email'] }}</td>
+            <td>
+                <form method="POST" action={{ url_for('change_role', id=user['id'] )}}>
+                    {{ csrf_token() }}
+                    <select name="role">
+                        <option value="student">
+                            {% if user['role'] == 'student' %}
+                                selected
+                            {% endif %}
+                            Student
+                        </option>
+
+                        <option value="admin">
+                            {% if user['role'] == 'admin' %}
+                                selected
+                            {% endif %}
+                            Admin
+                        </option>
+                    </select>
+                    <button type='submit'>Update</button>
+
+                </form>
+            </td>
+        </tr>
+    {% endfor %}
+
+</table>
+{% else %}
+<p>No users Found.</p>
+{% endif %}
+{% endblock %}

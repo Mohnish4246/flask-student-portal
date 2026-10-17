@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+
+{% block title %}
+Admin Dashboard
+{% endblock %}
+
+{% block content %}
+<h2>Admin Dashboard</h2>
+
+<p>Welcome,
+    <strong>{{ session.get("username") }}</strong>
+</p>
+
+<div class="dashboard">
+
+    <div class="dashbaord-card">
+        <h3>Total Students</h3>
+        <p>{{ total_students }}</p>
+    </div>
+
+    <div class="dashbaord-card">
+        <h3>Total Users</h3>
+        <p>{{ total_users }}</p>
+    </div>
+
+    <div class="dashbaord-card">
+        <h3>Total Admins</h3>
+        <p>{{ total_admins }}</p>
+    </div>
+</div>
+<br>
+<a href="{{ url_for("manage_users") }}">
+    <button>Manage Users</button>
+</a>
+{% endblock %}

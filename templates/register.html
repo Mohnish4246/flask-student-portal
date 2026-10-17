@@ -1,0 +1,69 @@
+
+{% extends "base.html" %}
+
+{% block title %}
+Register
+{% endblock %}
+
+{% block content %}
+
+<!-- Center the registration form -->
+<div class="auth-container">
+    <h2>Register</h2>
+
+    <form method="POST">
+
+        <!-- CSRF protection from Flask-WTF -->
+        {{ form.hidden_tag() }}
+
+        <!-- Username -->
+        <div>
+            {{ form.username.label }}
+            {{ form.username() }}
+
+            {% for error in form.username.errors %}
+                <p class="error">{{ error }}</p>
+            {% endfor %}
+        </div>
+
+        <!-- Email -->
+        <div>
+            {{ form.email.label }}
+            {{ form.email() }}
+
+            {% for error in form.email.errors %}
+                <p class="error">{{ error }}</p>
+            {% endfor %}
+        </div>
+
+        <!-- Password -->
+        <div>
+            {{ form.password.label }}
+            {{ form.password() }}
+
+            {% for error in form.password.errors %}
+                <p class="error">{{ error }}</p>
+            {% endfor %}
+        </div>
+
+        <!-- Confirm Password -->
+        <div>
+            {{ form.confirm_password.label }}
+            {{ form.confirm_password() }}
+
+            {% for error in form.confirm_password.errors %}
+                <p class="error">{{ error }}</p>
+            {% endfor %}
+        </div>
+
+        {{ form.submit() }}
+
+    </form>
+
+    <p>
+        Already have an Account?
+        <a href="{{ url_for('auth.login') }}">Login</a>
+    </p>
+</div>
+
+{% endblock %}
